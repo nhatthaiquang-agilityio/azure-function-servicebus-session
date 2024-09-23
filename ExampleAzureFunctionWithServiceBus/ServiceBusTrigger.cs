@@ -15,7 +15,7 @@ namespace ExampleAzureFunctionWithServiceBus
 
         [Function(nameof(ServiceBusTrigger))]
         public async Task Run(
-            [ServiceBusTrigger("myqueue", Connection = "ServiceBus")]
+            [ServiceBusTrigger("myqueue", Connection = "ServiceBus", IsSessionsEnabled = true)]
             ServiceBusReceivedMessage message,
             ServiceBusMessageActions messageActions)
         {
