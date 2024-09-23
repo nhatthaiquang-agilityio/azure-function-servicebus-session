@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleAzureFunctionWithServiceBus", "ExampleAzureFunctionWithServiceBus.csproj", "{18A39B02-BF4E-442F-B796-8FA8D0A2CC73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusSenderMessages", "..\ServiceBusSenderMessages\ServiceBusSenderMessages.csproj", "{17D3E8A2-C9FB-4F8D-A94C-26FAA38C3D80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{18A39B02-BF4E-442F-B796-8FA8D0A2CC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18A39B02-BF4E-442F-B796-8FA8D0A2CC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18A39B02-BF4E-442F-B796-8FA8D0A2CC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D3E8A2-C9FB-4F8D-A94C-26FAA38C3D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D3E8A2-C9FB-4F8D-A94C-26FAA38C3D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D3E8A2-C9FB-4F8D-A94C-26FAA38C3D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D3E8A2-C9FB-4F8D-A94C-26FAA38C3D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
