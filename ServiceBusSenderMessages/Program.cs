@@ -4,8 +4,8 @@ using Microsoft.Azure.ServiceBus.Core;
 using System.Text;
 
 Console.WriteLine("Hello, World!");
-var connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
-var queueName = Environment.GetEnvironmentVariable("QueueName");
+var connectionString = Environment.GetEnvironmentVariable("ServiceBus");
+var queueName = "myqueue";
 
 int sessions = 10;
 int messagePerSession = 2;
