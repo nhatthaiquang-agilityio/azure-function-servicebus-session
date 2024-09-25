@@ -64,11 +64,4 @@ stages:
           EnvironmentName: Test
           AzureSubscription: '${{ variables.AzureServiceConnection }}'
           AzureFunctionName: '${{ variables.AzureFunctionName }}'
-          AppSettings:  |
-            [
-              {
-                "name": "Values:ServiceBus",
-                "value": "$(ServiceBus)",
-                "slotSetting": false
-              }
-            ]
+          AppSettings: '-ServiceBus $(ServiceBus)'
