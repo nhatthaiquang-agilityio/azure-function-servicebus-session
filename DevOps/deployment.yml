@@ -35,6 +35,9 @@ stages:
   - stage: SetupInfrastructure
     displayName: Test - Setup Infrastructure
     dependsOn: build
+    variables:
+      # set FuncStorageAccountName into variable group
+      - group: Test.ExampleAzureFunctions
     jobs:
       - template: jobs/setup-infrastructure.yml@CICD
         parameters:
@@ -46,13 +49,16 @@ stages:
           AzureContainerName: 'testtfconstainerforazfunc'
           AzureRmKeyTFState: 'test.az-fun-infra-svc-bus.tfstate'
           Location: 'SouthEast Asia'
-          FuncStorageAccountName: 'teststorageazfuncsvcbus'
+          FuncStorageAccountName: '$(FuncStorageAccountName)'
           AzureFunctionName: '${{ variables.AzureFunctionName }}'
           AzureServiceBus: ${{ variables.AzureServiceBus }}
 
   - stage: deploy
     displayName: Deploy Test
     dependsOn: SetupInfrastructure
+    variables:
+      # set ServiceBus into variable group with secret type
+      - group: Test.ExampleAzureFunctions
     jobs:
       - template: jobs/deploy-azure-function.yml@CICD
         parameters:
