@@ -51,7 +51,6 @@ stages:
           Location: 'SouthEast Asia'
           FuncStorageAccountName: '$(FuncStorageAccountName)'
           AzureFunctionName: '${{ variables.AzureFunctionName }}'
-          AzureServiceBus: ${{ variables.AzureServiceBus }}
 
   - stage: deploy
     displayName: Deploy Test
