@@ -1,0 +1,69 @@
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd)$(Rev:.r)
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+resources:
+  repositories:
+    - repository: CICD
+      type: github
+      ref: main
+      name: nhatthaiquang-agilityio/Terraform-CI-CD
+      endpoint: nhatthaiquang-agilityio
+
+variables:
+  - name: TerraformWorkingDirectory
+    value: $(System.DefaultWorkingDirectory)/DevOps/terraform
+  - name: AzureFunctionName
+    value: 'exampleazfuncservicebus'
+  - name: AzureServiceConnection
+    value: 'ExampleAzureServiceConnection'
+  - name: AzureResourceGroupName
+    value: 'RG-ExamAzureFunctions'
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - template: jobs/build-dotnet.yml@CICD
+        parameters:
+          BuildTargetPath: '**/ExampleAzureFunctionWithServiceBus.csproj'
+          DotNetVersion: '8.x'
+
+  - stage: SetupInfrastructure
+    displayName: Test - Setup Infrastructure
+    dependsOn: build
+    jobs:
+      - template: jobs/setup-infrastructure.yml@CICD
+        parameters:
+          EnvironmentName: Test
+          TerraformWorkingDirectory: '${{ variables.TerraformWorkingDirectory }}'
+          AzureServiceConnectionName: '${{ variables.AzureServiceConnection }}'
+          AzureResourceGroupName: '${{ variables.AzureResourceGroupName }}'
+          StorageAccountsName: 'testtfstorageforazfunc'
+          AzureContainerName: 'testtfconstainerforazfunc'
+          AzureRmKeyTFState: 'test.az-fun-infra-svc-bus.tfstate'
+          Location: 'SouthEast Asia'
+          FuncStorageAccountName: 'teststorageazfuncsvcbus'
+          AzureFunctionName: '${{ variables.AzureFunctionName }}'
+          AzureServiceBus: ${{ variables.AzureServiceBus }}
+
+  - stage: deploy
+    displayName: Deploy Test
+    dependsOn: SetupInfrastructure
+    jobs:
+      - template: jobs/deploy-azure-function.yml@CICD
+        parameters:
+          EnvironmentName: Test
+          AzureSubscription: '${{ variables.AzureServiceConnection }}'
+          AzureFunctionName: '${{ variables.AzureFunctionName }}'
+          AppSettings:  |
+            [
+              {
+                "name": "Values:ServiceBus",
+                "value": "$(ServiceBus)",
+                "slotSetting": false
+              }
+            ]
